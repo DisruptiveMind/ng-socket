@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+    <head>
+        <title>AngularJS 1.x + Socket.IO Demo</title>
+        <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="app.css">
+    </head>
+    <body ng-app="das" ng-controller="AppCtrl">
+        <div class="container">
+            <h1>AngularJS 1.x + Socket.IO</h1>
+            <p>An example using AngularJS and Socket.IO</p>
+            <div class="row">
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <p ng-repeat="item in items">{{::item.count}}</p>
+                </div>
+            </div>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/angular/angular.min.js"></script>
+        <script src="/angular-socket-io/socket.min.js"></script>
+        <script>
+            angular.module('das', [
+                'btford.socket-io'
+            ])
+            .factory('mySocket', function (socketFactory) {
+                var ioSocket = io.connect();
+                var socket = socketFactory({
+                    ioSocket: ioSocket
+                });
+
+                return ioSocket;
+            })
+            .controller('AppCtrl', function($scope, mySocket, $interval){
+                $scope.items = [];
+                var count = 0;
+                
+                mySocket.emit('join', 'test');
+                mySocket.on('count', function(count){
+                    $scope.items.unshift({count: count});
+                    if ($scope.items.length > 11) { 
+                        console.log("Shifted");
+                        $scope.items.pop();
+                    }
+                    
+                    $scope.$apply();
+                })
+                
+                $interval(function(){
+                    mySocket.emit('count', count++)
+                }, 100);
+            })
+        </script>
+    </body>
+</html>

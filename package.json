@@ -1,0 +1,19 @@
+{
+  "name": "angularjs-socket.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Tyler Pham <tyler@disruptiveart.com>",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.4.9",
+    "angular-socket-io": "^0.7.0",
+    "bootstrap": "^3.3.6",
+    "connect": "^3.4.0",
+    "serve-static": "^1.10.2",
+    "socket.io": "^1.4.4"
+  }
+}
